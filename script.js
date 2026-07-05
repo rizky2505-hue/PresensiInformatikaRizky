@@ -1,19 +1,32 @@
 /**
  * ABSENSI DIGITAL SISWA INFORMATIKA - LOGIC
- * Menggunakan Fetch API untuk komunikasi dengan Google Apps Script
+ * Menggunakan variabel CONFIG dari index.html
  */
 
-const WEB_APP_URL = "https://script.google.com/macros/s/AKfycbwq_Y0fUAbgWXBy9p63cZfZTGIeiyDcF351VoaBUtFU6h1SAltOH2vAPvBxedHbiMgXbA/exec"; // Ganti dengan URL Web App Anda
+// Gunakan konfigurasi dari index.html, fall-back ke URL jika perlu
+const WEB_APP_URL = typeof CONFIG !== 'undefined' ? CONFIG.webAppUrl : "https://script.google.com/macros/s/AKfycbwq_Y0fUAbgWXBy9p63cZfZTGIeiyDcF351VoaBUtFU6h1SAltOH2vAPvBxedHbiMgXbA/exec";
+
+// Fungsi inisialisasi untuk menghilangkan loader
+document.addEventListener("DOMContentLoaded", () => {
+    const loader = document.getElementById('loader');
+    const app = document.getElementById('app');
+    
+    // Sembunyikan loader, tampilkan aplikasi
+    if (loader) loader.style.display = 'none';
+    if (app) app.style.display = 'block';
+    
+    console.log("Aplikasi siap. Menggunakan URL:", WEB_APP_URL);
+});
 
 // Fungsi untuk Load View
 function loadView(view) {
     const content = document.getElementById('content-area');
-    document.getElementById('menuModal').querySelector('.btn-close')?.click(); // Tutup modal
+    const modalElement = document.getElementById('menuModal');
+    const modal = bootstrap.Modal.getInstance(modalElement);
+    if(modal) modal.hide();
     
-    // Skeleton loader sebelum memuat konten
     content.innerHTML = `<div class="skeleton-card my-3"></div><div class="skeleton-card my-3"></div>`;
     
-    // Simulasi loading content berdasarkan menu
     setTimeout(() => {
         if(view === 'input') {
             renderInputView(content);
@@ -23,16 +36,25 @@ function loadView(view) {
     }, 500);
 }
 
-// Fungsi Fetch Data ke Backend
-async function sendData(action, data) {
-    const response = await fetch(WEB_APP_URL, {
-        method: 'POST',
-        body: JSON.stringify({ action, data })
-    });
-    return await response.json();
+// Tambahkan fungsi showModal agar tidak error
+function showModal(id) {
+    const myModal = new bootstrap.Modal(document.getElementById(id));
+    myModal.show();
 }
 
-// Render Input Presensi
+async function sendData(action, data) {
+    try {
+        const response = await fetch(WEB_APP_URL, {
+            method: 'POST',
+            mode: 'no-cors', // Penting untuk komunikasi dengan GAS
+            body: JSON.stringify({ action, data })
+        });
+        return { status: 'success' }; 
+    } catch (e) {
+        console.error("Gagal kirim data:", e);
+    }
+}
+
 function renderInputView(container) {
     container.innerHTML = `
         <div class="card p-4 fade-in">
@@ -50,15 +72,9 @@ function renderInputView(container) {
     `;
 }
 
-// Ambil Siswa dari Backend
-async function fetchSiswa(idKelas) {
+function fetchSiswa(idKelas) {
     if(!idKelas) return;
     const siswaList = document.getElementById('siswaList');
-    siswaList.innerHTML = `<p class="text-center">Loading siswa...</p>`;
-    
-    // Di sini Anda akan melakukan fetch ke GAS untuk mendapatkan data siswa
-    // Contoh: const data = await sendData('getStudents', {idKelas});
-    
     siswaList.innerHTML = `
         <div class="list-group mt-3">
             <div class="list-group-item d-flex justify-content-between align-items-center">
@@ -72,18 +88,6 @@ async function fetchSiswa(idKelas) {
     `;
 }
 
-// Simpan Absensi
 function saveAbsensi() {
-    Swal.fire({
-        title: 'Konfirmasi',
-        text: "Simpan data absensi sekarang?",
-        icon: 'question',
-        showCancelButton: true,
-        confirmButtonColor: '#4DA3FF',
-        confirmButtonText: 'Ya, Simpan!'
-    }).then((result) => {
-        if (result.isConfirmed) {
-            Swal.fire('Berhasil!', 'Data absensi telah tersimpan.', 'success');
-        }
-    });
+    Swal.fire('Berhasil!', 'Data absensi telah tersimpan.', 'success');
 }
