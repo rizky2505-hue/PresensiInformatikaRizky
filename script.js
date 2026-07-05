@@ -3,7 +3,7 @@
  * Menggunakan Fetch API untuk komunikasi dengan Google Apps Script
  */
 
-const WEB_APP_URL = "https://script.google.com/macros/s/AKfycbzVH19ggzXDYgz_CdgqSBMOHZS1z_t3JAJGnjOnXWikiHmsx2UP3ov44_XMdnn5-LWFtA/exec"; // Ganti dengan URL Web App Anda
+const WEB_APP_URL = "https://script.google.com/macros/s/AKfycbwq_Y0fUAbgWXBy9p63cZfZTGIeiyDcF351VoaBUtFU6h1SAltOH2vAPvBxedHbiMgXbA/exec"; // Ganti dengan URL Web App Anda
 
 // Fungsi untuk Load View
 function loadView(view) {
