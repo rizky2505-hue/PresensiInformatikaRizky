@@ -4,7 +4,7 @@
  */
 
 // Gunakan konfigurasi dari index.html, fall-back ke URL jika perlu
-const WEB_APP_URL = typeof CONFIG !== 'undefined' ? CONFIG.webAppUrl : "https://script.google.com/macros/s/AKfycbwq_Y0fUAbgWXBy9p63cZfZTGIeiyDcF351VoaBUtFU6h1SAltOH2vAPvBxedHbiMgXbA/exec";
+const WEB_APP_URL = typeof CONFIG !== 'undefined' ? CONFIG.webAppUrl : "https://script.google.com/macros/s/AKfycbxnvtQAspYYpH35GvGVBomjmJserQYoSzIK2AXuYgeWCmcpvlkF6IOjdXHmow_XPAaP9g/exec";
 
 // Fungsi inisialisasi untuk menghilangkan loader
 document.addEventListener("DOMContentLoaded", () => {
