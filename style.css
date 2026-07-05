@@ -1,31 +1,70 @@
-/* style.css */
+/* ROOT VARIABLES - Tema SMA Al Islam 1 */
+:root {
+    --primary-blue: #0ea5e9;
+    --dark-blue: #0284c7;
+    --light-grey: #f8fafc;
+    --text-grey: #64748b;
+    --white: #ffffff;
+}
+
 body {
-    background-color: #f8f9fa;
-    font-family: 'Inter', sans-serif;
+    background-color: var(--light-grey) !important;
+    font-family: 'Segoe UI', system-ui, -apple-system, sans-serif;
 }
 
-#loader {
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-    justify-content: center;
-    height: 80vh;
+/* Header */
+.app-header {
+    background: linear-gradient(135deg, var(--primary-blue), var(--dark-blue));
 }
 
-#app {
-    display: none; /* Akan diubah oleh script.js */
+/* Sidebar */
+#sidebar-wrapper {
+    min-height: calc(100vh - 76px);
+    width: 250px;
+    transition: margin 0.25s ease-out;
+}
+.list-group-item {
+    border: none;
+    color: var(--text-grey);
+    font-weight: 500;
+}
+.list-group-item.active {
+    background-color: #e0f2fe;
+    color: var(--dark-blue);
+    border-left: 4px solid var(--primary-blue);
+}
+.list-group-item:hover:not(.active) {
+    background-color: var(--light-grey);
 }
 
-.card {
-    border-radius: 1rem;
+/* Card Siswa Presensi */
+.student-card {
+    transition: transform 0.2s;
+    border-radius: 12px;
+}
+.student-card:hover {
+    transform: translateY(-2px);
+}
+.status-btn {
+    opacity: 0.6;
+    transition: all 0.2s;
+}
+.status-btn.active {
+    opacity: 1;
+    transform: scale(1.05);
+    font-weight: bold;
     box-shadow: 0 4px 6px rgba(0,0,0,0.1);
 }
 
-.fade-in {
-    animation: fadeIn 0.5s;
-}
+/* Status Colors */
+.btn-hadir.active { background-color: #22c55e !important; color: white; border-color: #22c55e; }
+.btn-sakit.active { background-color: #3b82f6 !important; color: white; border-color: #3b82f6; }
+.btn-izin.active { background-color: #eab308 !important; color: white; border-color: #eab308; }
+.btn-alpha.active { background-color: #ef4444 !important; color: white; border-color: #ef4444; }
+.btn-terlambat.active { background-color: #f97316 !important; color: white; border-color: #f97316; }
 
-@keyframes fadeIn {
-    from { opacity: 0; }
-    to { opacity: 1; }
+/* Responsive adjustments */
+@media (max-width: 768px) {
+    #sidebar-wrapper { width: 100%; min-height: auto; border-bottom: 1px solid #dee2e6; }
+    #wrapper { flex-direction: column; }
 }
